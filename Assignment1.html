@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="myForm">
+        <label>
+            <p>Email</p>
+            <input type="email" id="email" name="email" placeholder="Enter email" />
+        </label>
+        <label>
+            <p>Email</p>
+            <input type="password" id="password" name="password" placeholder="Enter password" />
+        </label>
+        <label>
+            <p>Email</p>
+            <select id="sex" name="sex">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+            </select>
+        </label>
+        <label>
+            <p>Email</p>
+            <label id="role">
+                Admin
+                <input type="radio" name="role" value="Admin" />
+                User
+                <input type="radio" name="role" value="User" />
+            </label>
+
+
+        </label>
+        <label>
+            <p>Email</p>
+            <label id="">
+                Perm 1
+                <input id="permission" type="checkbox" name="permission" value="Perm1" />
+                Perm 2
+                <input id="permission" type="checkbox" name="permission" value="Perm2" />
+                Perm 3
+                <input id="permission" type="checkbox" name="permission" value="Perm3" />
+                Perm 4
+                <input id="permission" type="checkbox" name="permission" value="Perm4" />
+            </label>
+
+        </label>
+
+        <button onclick="validateform()"> Submit</button>
+
+
+    </form>
+    <div id="confirmation" class="hidden">
+        <p>Email: <span id="confirmEmail"></span></p>
+        <p>Password: <span id="confirmPassword"></span></p>
+        <p>Sex: <span id="confirmSex"></span></p>
+        <p>Role: <span id="confirmRole"></span></p>
+        <p>Permissions: <span id="confirmPermissions"></span></p>
+        <button onclick="confirmDetails()">Confirm</button>
+    </div>
+    <script>
+        function validateform() {
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return email.match(re);
+            }
+
+            function validatePassword(password) {
+                const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+                return password.match(re);
+            }
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const sex = document.getElementById('sex').value;
+            const role = document.querySelector('input[name="role"]:checked');
+            const permissions = document.querySelectorAll('input[name="permission"]:checked');
+
+            if (!email || !password || !sex || !role || permissions.length < 2) {
+                alert('Please fill in all fields and select at least 2 permissions.');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                alert('Invalid email format.');
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                alert('Password must be at least 6 characters long and contain uppercase, lowercase letters, and digits.');
+                return;
+            }
+            document.getElementById('myForm').classList.add('hidden');
+            document.getElementById('confirmEmail').textContent = email;
+            document.getElementById('confirmPassword').textContent = password;
+            document.getElementById('confirmSex').textContent = sex;
+            document.getElementById('confirmRole').textContent = role.value;
+            document.getElementById('confirmPermissions').textContent = Array.from(permissions).map(perm => perm.value).join(', ');
+            document.getElementById('confirmation').classList.remove('hidden');
+        }
+
+        function confirmDetails() {
+            alert('Details confirmed!');
+        }
+    </script>
+
+</body>
+
+</html>
